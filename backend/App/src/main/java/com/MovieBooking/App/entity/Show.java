@@ -5,5 +5,6 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Booking {
+public class Show {
+
 }

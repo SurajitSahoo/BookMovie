@@ -1,9 +1,12 @@
 package com.MovieBooking.App.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Data
-public class Booking {
+@Table(name = "users")
+public class User {
+
 }
