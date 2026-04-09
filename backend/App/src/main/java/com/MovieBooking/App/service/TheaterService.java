@@ -8,35 +8,35 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class TheaterService {
     @Autowired
     private TheaterRepository theaterRepository;
+
     public Theater addTheater(TheaterDTO theaterDTO) {
         Theater theater = new Theater();
         theater.setTheaterName(theaterDTO.getTheaterName());
         theater.setTheaterLocation(theaterDTO.getTheaterLocation());
-        theater.setTheaterCapacity(theater.getTheaterCapacity());
+        theater.setTheaterCapacity(theaterDTO.getTheaterCapacity()); // fixed: use DTO, not theater itself
         theater.setTheaterScreenType(theaterDTO.getTheaterScreenType());
 
         return theaterRepository.save(theater);
     }
 
-    public List<Theater> getTheaterByLocation(String location) {
-        Optional<List<Theater>> listOfTheaterBox = theaterRepository.findByLocation(location);
-        if(listOfTheaterBox.isPresent()){
-            return listOfTheaterBox.get();
+    public List<Theater> getTheaterByLocation(String theaterLocation) {
+        List<Theater> theaters = theaterRepository.findByTheaterLocation(theaterLocation);
+        if (theaters.isEmpty()) {
+            throw new RuntimeException("No theater found for location entered: " + theaterLocation);
         }
-        else throw new RuntimeException("No theater found for location entered: "+location);
+        return theaters;
     }
 
     public Theater updateTheater(Long id, TheaterDTO theaterDTO) {
         Theater theater = theaterRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("No theater found for id:"+id));
+                .orElseThrow(() -> new RuntimeException("No theater found for id:" + id));
         theater.setTheaterName(theaterDTO.getTheaterName());
         theater.setTheaterLocation(theaterDTO.getTheaterLocation());
-        theater.setTheaterCapacity(theater.getTheaterCapacity());
+        theater.setTheaterCapacity(theaterDTO.getTheaterCapacity()); // fixed
         theater.setTheaterScreenType(theaterDTO.getTheaterScreenType());
 
         return theaterRepository.save(theater);

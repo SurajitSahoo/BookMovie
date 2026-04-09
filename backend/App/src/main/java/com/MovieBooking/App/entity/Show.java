@@ -9,9 +9,11 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "movie_show")
 public class Show {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private LocalDateTime showTime;
     private Double price;

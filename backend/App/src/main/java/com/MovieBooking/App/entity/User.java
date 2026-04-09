@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Table(name = "users")
 public class User implements UserDetails {
     //A user can have multiple bookings so here we will map ONE-TO-MANY
+    @Id
     private Long id;
     private String username;
     private String email;
