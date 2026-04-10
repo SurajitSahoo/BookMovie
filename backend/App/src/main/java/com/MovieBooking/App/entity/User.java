@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
     //A user can have multiple bookings so here we will map ONE-TO-MANY
     @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String email;
