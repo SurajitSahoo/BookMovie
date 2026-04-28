@@ -14,6 +14,7 @@ import java.util.Optional;
 public class MovieService {
      @Autowired
     private MovieRepository movieRepository;
+
     public Movie addMovie(MovieDTO movieDTO) {
         Movie movie = new Movie();
         movie.setName(movieDTO.getName());
@@ -22,6 +23,7 @@ public class MovieService {
         movie.setReleaseDate(movieDTO.getReleaseDate());
         movie.setDuration(movieDTO.getDuration());
         movie.setLanguage(movieDTO.getLanguage());
+        movie.setImageUrl(movieDTO.getImageUrl());
         return movieRepository.save(movie);
     }
 
@@ -64,6 +66,7 @@ public class MovieService {
         movie.setReleaseDate(movieDTO.getReleaseDate());
         movie.setDuration(movieDTO.getDuration());
         movie.setLanguage(movieDTO.getLanguage());
+        movie.setImageUrl(movieDTO.getImageUrl());
         return movieRepository.save(movie);
     }
 

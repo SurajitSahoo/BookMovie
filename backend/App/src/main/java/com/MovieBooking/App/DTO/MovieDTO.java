@@ -11,5 +11,6 @@ public class MovieDTO {
     private Integer duration;
     private LocalDate releaseDate;
     private String language;
+    private String imageUrl;
 
 }

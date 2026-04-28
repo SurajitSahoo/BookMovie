@@ -19,6 +19,8 @@ public class Movie {
     private Integer duration;
     private LocalDate releaseDate;
     private String language;
+    @Column(length = 500)
+    private String imageUrl;
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY) //Bidirectionally we are mapping it
     private List<Show> show;
