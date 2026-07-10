@@ -28,7 +28,7 @@ public class TheaterController {
         return ResponseEntity.ok(theaterService.getTheaterByLocation(location));
     }
 
-    @PutMapping("/updatetheater")
+    @PutMapping("/updatetheater/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Theater> updateTheater(@PathVariable Long id, @RequestBody TheaterDTO theaterDTO)
     {

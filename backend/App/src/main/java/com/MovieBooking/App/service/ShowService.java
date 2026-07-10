@@ -33,7 +33,7 @@ public class ShowService {
                 .orElseThrow(()->new RuntimeException("No movie found"+showDTO.getTheaterId()));
         Show show = new Show();
         show.setShowTime(showDTO.getShowTime());
-        show.setPrice(show.getPrice());
+        show.setPrice(showDTO.getPrice());
         show.setMovie(movie);
         show.setTheater(theater);
 
@@ -71,7 +71,7 @@ public class ShowService {
                 .orElseThrow(()->new RuntimeException("No movie found"+showDTO.getTheaterId()));
 
         show.setShowTime(showDTO.getShowTime());
-        show.setPrice(show.getPrice());
+        show.setPrice(showDTO.getPrice());
         show.setMovie(movie);
         show.setTheater(theater);
 

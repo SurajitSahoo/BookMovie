@@ -50,12 +50,12 @@ public class MovieService {
     }
 
     public Movie getMovieByTitle(String title) {
-        Optional<List<Movie>> movieBox =   movieRepository.findByName(title); //It contains movies list
 
-        if(movieBox.isPresent()){
-            return (Movie) movieBox.get();
-        }
-        else throw new RuntimeException("no movies found for this title"+title);
+        return movieRepository.findByName(title)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "No movie found with title: " + title
+                        ));
     }
 
     public Movie updateMovie(Long id, MovieDTO movieDTO) {

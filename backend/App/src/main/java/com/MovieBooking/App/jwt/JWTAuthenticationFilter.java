@@ -1,6 +1,78 @@
+//package com.MovieBooking.App.jwt;
+//
+//import com.MovieBooking.App.Repository.UserRepository;
+//import jakarta.servlet.FilterChain;
+//import jakarta.servlet.ServletException;
+//import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletResponse;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+//import org.springframework.stereotype.Component;
+//import org.springframework.web.filter.OncePerRequestFilter;
+//
+//import java.io.IOException;
+//import java.util.List;
+//import java.util.stream.Collectors;
+//
+//@Component
+//public class JWTAuthenticationFilter extends OncePerRequestFilter {
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @Autowired
+//    private JwtService jwtService;
+//    @Override
+//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+//            throws ServletException, IOException {
+//            //Auto generate through intelij idea
+//    final String authHeader = request.getHeader("Authorization");
+//    final String jwtToken;
+//    final String username;
+//
+//    if(authHeader==null || !authHeader.startsWith("Bearer"))
+//    {
+//        filterChain.doFilter(request, response);
+//        return;
+//    }
+//    //Extract the jwt Token from the Header
+//        jwtToken = authHeader.substring(7);
+//        username = jwtService.extractUsername(jwtToken);
+//
+//    //Check if we have a username & no authentication exist yet
+//        if(username != null && SecurityContextHolder.getContext().getAuthentication()==null)
+//        {
+//            var userdetails = userRepository.findByUsername(username)
+//                    .orElseThrow(()-> new RuntimeException("User not found"));
+//
+//            //Validate the token
+//            if(jwtService.isTokenValid(jwtToken,userdetails)){
+//                //create the authentication with user roles
+//            List<SimpleGrantedAuthority> authorities = userdetails.getRoles()
+//                    .stream()
+//                    .map(SimpleGrantedAuthority::new)
+//                    .collect(Collectors.toList());
+//
+//            UsernamePasswordAuthenticationToken authToken =
+//                    new UsernamePasswordAuthenticationToken(userdetails,null,authorities);
+//            //Set the authentication details
+//            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//            //Update the security context with authentication
+//            SecurityContextHolder.getContext().setAuthentication(authToken);
+//
+//            }
+//        }
+//        filterChain.doFilter(request,response);
+//
+//    }
+//}
 package com.MovieBooking.App.jwt;
 
 import com.MovieBooking.App.Repository.UserRepository;
+import io.jsonwebtoken.ExpiredJwtException; // 🛠️ Added import
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,47 +97,60 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtService jwtService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-            //Auto generate through intelij idea
-    final String authHeader = request.getHeader("Authorization");
-    final String jwtToken;
-    final String username;
 
-    if(authHeader==null || !authHeader.startsWith("Bearer"))
-    {
-        filterChain.doFilter(request, response);
-        return;
-    }
-    //Extract the jwt Token from the Header
+        final String authHeader = request.getHeader("Authorization");
+        final String jwtToken;
+        String username = null; // 🛠️ Removed final so we can assign inside the try block
+
+        // 🛠️ Added a space after "Bearer" to ensure it matches standard format
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Extract the jwt Token from the Header
         jwtToken = authHeader.substring(7);
-        username = jwtService.extractUsername(jwtToken);
 
-    //Check if we have a username & no authentication exist yet
-        if(username != null && SecurityContextHolder.getContext().getAuthentication()==null)
-        {
+        // 🛠️ Added try-catch block to handle expired tokens safely
+        try {
+            username = jwtService.extractUsername(jwtToken);
+        } catch (ExpiredJwtException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("JWT Token has expired. Please log in again.");
+            return; // Halt the filter chain so it doesn't crash the server
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Invalid JWT Token.");
+            return; // Halt the filter chain for any other token errors
+        }
+
+        // Check if we have a username & no authentication exist yet
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userdetails = userRepository.findByUsername(username)
-                    .orElseThrow(()-> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new RuntimeException("User not found"));
 
-            //Validate the token
-            if(jwtService.isTokenValid(jwtToken,userdetails)){
-                //create the authentication with user roles
-            List<SimpleGrantedAuthority> authorities = userdetails.getRoles()
-                    .stream()
-                    .map(SimpleGrantedAuthority::new)
-                    .collect(Collectors.toList());
+            // Validate the token
+            if (jwtService.isTokenValid(jwtToken, userdetails)) {
+                // create the authentication with user roles
+                List<SimpleGrantedAuthority> authorities = userdetails.getRoles()
+                        .stream()
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
 
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(userdetails,null,authorities);
-            //Set the authentication details
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            //Update the security context with authentication
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(userdetails, null, authorities);
 
+                // Set the authentication details
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                // Update the security context with authentication
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-        filterChain.doFilter(request,response);
-
+        filterChain.doFilter(request, response);
     }
 }

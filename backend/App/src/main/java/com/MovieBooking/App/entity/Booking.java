@@ -1,13 +1,18 @@
 package com.MovieBooking.App.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Data
+
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,17 +20,21 @@ public class Booking {
     private Integer numberOfSeats;
     private LocalDateTime bookingTime;
     private Double price;
+    @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "booking_seat_numbers")
     private List<String > seatNumbers;
 
-    @ManyToOne(fetch = FetchType.EAGER) //i want booking information when fethch type loaded
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnoreProperties({"password","bookings"})
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "show_id", nullable = false)
+    @JsonIgnore
     private Show show;
 }
