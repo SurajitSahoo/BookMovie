@@ -2,6 +2,7 @@ Movie Booking System API
 
 ​A robust, scalable Spring Boot REST API for managing movie theater operations, show scheduling, and ticket bookings. The system features a stateless JWT-based authentication layer with Role-Based Access Control (RBAC).
 
+##
 ​🚀 Features:
 ​🔐 Security & Authentication:
 
