@@ -12,7 +12,7 @@ Movie Booking System API
 
 ​Password Encryption: Secure credential storage using BCryptPasswordEncoder.
 
-​🎬 Movie & Theater Management
+​###🎬 Movie & Theater Management
 
 ​Movie Catalog: Search movies by genre, language, or title.
 
