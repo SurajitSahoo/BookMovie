@@ -166,6 +166,17 @@ Use Postman to test the REST APIs.
 - Docker-based deployment.
 - Automated unit and integration testing.
 
+## 🖼️ Screenshots
+
+### Home Page
+![Home Page](images/Home.png)
+
+### Login Page
+![Login Page](images/logIN.png)
+
+### Booking Page
+![Movies Page](images/Movies.png)
+
 ## 👨‍💻 Author
 
 **Surajit Sahoo**
