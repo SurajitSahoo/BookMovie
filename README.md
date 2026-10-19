@@ -4,13 +4,14 @@
 
 
 ​# 🚀 Features:
+
 ​## 🔐 Security & Authentication:
 
-​JWT Integration: Stateless authentication using JSON Web Tokens.
+​-JWT Integration: Stateless authentication using JSON Web Tokens.
 
-​RBAC (Role-Based Access Control): Granular permissions for USER and ADMIN roles using Spring Security.
+​-RBAC (Role-Based Access Control): Granular permissions for USER and ADMIN roles using Spring Security.
 
-​Password Encryption: Secure credential storage using BCryptPasswordEncoder.
+​-Password Encryption: Secure credential storage using BCryptPasswordEncoder.
 
 ​## 🎬 Movie & Theater Management
 
