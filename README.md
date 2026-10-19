@@ -171,7 +171,3 @@ Use Postman to test the REST APIs.
 **Surajit Sahoo**
 
 - GitHub: [SurajitSahoo](https://github.com/SurajitSahoo)
-
-## 📄 License
-
-This project is available for educational and portfolio purposes. Add a LICENSE file if you want to specify formal usage and distribution terms.
