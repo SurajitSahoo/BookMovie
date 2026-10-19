@@ -3,8 +3,8 @@
 ​A robust, scalable Spring Boot REST API for managing movie theater operations, show scheduling, and ticket bookings. The system features a stateless JWT-based authentication layer with Role-Based Access Control (RBAC).
 
 
-​#🚀 Features:
-​##🔐 Security & Authentication:
+​# 🚀 Features:
+​## 🔐 Security & Authentication:
 
 ​JWT Integration: Stateless authentication using JSON Web Tokens.
 
@@ -12,7 +12,7 @@
 
 ​Password Encryption: Secure credential storage using BCryptPasswordEncoder.
 
-​##🎬 Movie & Theater Management
+​## 🎬 Movie & Theater Management
 
 ​Movie Catalog: Search movies by genre, language, or title.
 
@@ -20,7 +20,7 @@
 
 ​Dynamic Scheduling: Link movies to specific theaters with unique showtimes and pricing.
 
-​##🎟️ Booking Engine
+​## 🎟️ Booking Engine
 ​Real-time Seat Validation: Prevents double-booking by checking specific seat numbers across existing active bookings.
 
 ​Capacity Management: Automatic checks to ensure theater capacity is never exceeded.
@@ -29,14 +29,14 @@
 
 ​Cancellation Policy: Built-in business logic preventing cancellations within 2 hours of showtime.
 
-​##🛠️ Tech Stack
+​## 🛠️ Tech Stack
 ​Framework: Spring Boot 3.x
 ​Security: Spring Security, JJWT (JSON Web Token)
 ​Persistence: Spring Data JPA
 ​Database: MySQL / PostgreSQL (JDBC)
 ​Lombok: To reduce boilerplate code.
 
-​#📂 Project Structure
+​# 📂 Project Structure
 
 Package Description
 .controller REST Endpoints for Auth, Admin, Movies, Theaters, and Bookings.
