@@ -169,13 +169,13 @@ Use Postman to test the REST APIs.
 ## 🖼️ Screenshots
 
 ### Home Page
-![Home Page](src/images/Home.png)
+![Home Page](frontend/src/images/Home.png)
 
 ### Login Page
-![Login Page](src/images/LogIN.png)
+![Login Page](frontend/src/images/LogIN.png)
 
 ### Booking Page
-![Movies Page](src/images/Movies.png)
+![Movies Page](frontend/src/images/Movies.png)
 
 ## 👨‍💻 Author
 
