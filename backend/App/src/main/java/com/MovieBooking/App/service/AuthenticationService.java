@@ -88,11 +88,13 @@ public class AuthenticationService {
         String token = jwtService.generateToken(user);
 
         // 4. Return response
-        return LoginResponseDTO.builder()
-                .jwtToken(token)
-                .username(user.getUsername())
-                .roles(user.getRoles())
-                .userId(user.getId())
-                .build();
+        LoginResponseDTO response = new LoginResponseDTO();
+
+        response.setJwtToken(token);
+        response.setUsername(user.getUsername());
+        response.setRoles(user.getRoles());
+        response.setUserId(user.getId());
+
+        return response;
     }
 }
