@@ -1,48 +1,177 @@
-# Movie Booking System API
+# 🎬 Movie Booking System API
 
-​A robust, scalable Spring Boot REST API for managing movie theater operations, show scheduling, and ticket bookings. The system features a stateless JWT-based authentication layer with Role-Based Access Control (RBAC).
+A robust and scalable Spring Boot REST API for managing movies, theaters, show scheduling, and ticket bookings. The application uses JWT-based authentication and Role-Based Access Control (RBAC) to secure endpoints and manage user permissions.
 
+## 🚀 Features
 
-​# 🚀 Features:
+### 🔐 Authentication & Security
+- JWT-based stateless authentication.
+- Role-Based Access Control (USER and ADMIN).
+- Password encryption using BCrypt.
+- Secured REST endpoints using Spring Security.
 
-​## 🔐 Security & Authentication:
+### 🎥 Movie Management
+- Retrieve and search movies by title, genre, and language.
+- Manage movie details and information.
+- Admin-controlled movie operations.
 
-​-JWT Integration: Stateless authentication using JSON Web Tokens.
+### 🏢 Theater & Show Management
+- Manage theater details and locations.
+- Schedule movies in specific theaters.
+- Configure showtimes and ticket prices.
+- Manage show availability and theater capacity.
 
-​-RBAC (Role-Based Access Control): Granular permissions for USER and ADMIN roles using Spring Security.
+### 🎟️ Booking Management
+- Book tickets for available shows.
+- Validate seat availability.
+- Prevent duplicate seat bookings.
+- Manage booking statuses: PENDING, CONFIRMED, and CANCELLED.
+- Cancellation policy that prevents cancellation within two hours of showtime.
 
-​-Password Encryption: Secure credential storage using BCryptPasswordEncoder.
+## 🛠️ Tech Stack
 
-​## 🎬 Movie & Theater Management
+| Technology | Purpose |
+|---|---|
+| Java | Backend programming |
+| Spring Boot | REST API development |
+| Spring Security | Authentication and authorization |
+| JWT | Token-based authentication |
+| Spring Data JPA | Database operations |
+| MySQL / PostgreSQL | Relational database |
+| Maven | Dependency management |
+| Lombok | Reducing boilerplate code |
+| Postman | API testing |
+| Git & GitHub | Version control |
 
-​Movie Catalog: Search movies by genre, language, or title.
+## 📂 Project Structure
 
-​Venue Management: Location-based theater discovery.
+```text
+MovieBooking/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/MovieBooking/App/
+│   │   │       ├── controller/
+│   │   │       ├── service/
+│   │   │       ├── repository/
+│   │   │       ├── model/
+│   │   │       ├── dto/
+│   │   │       ├── config/
+│   │   │       ├── security/
+│   │   │       └── AppApplication.java
+│   │   └── resources/
+│   │       └── application.properties
+│   └── test/
+├── pom.xml
+├── .gitignore
+└── README.md
+```
 
-​Dynamic Scheduling: Link movies to specific theaters with unique showtimes and pricing.
+*Note: Adjust package and folder names to match your actual source code.*
 
-​## Booking Engine
-​Real-time Seat Validation: Prevents double-booking by checking specific seat numbers across existing active bookings.
+## ⚙️ Installation & Setup
 
-​Capacity Management: Automatic checks to ensure theater capacity is never exceeded.
+### Prerequisites
+- Java 17 or the Java version configured in the project.
+- Maven.
+- MySQL or PostgreSQL.
+- Postman (optional, for API testing).
 
-​Booking Lifecycle: Status management for PENDING, CONFIRMED, and CANCELLED states.
+### 1. Clone the Repository
 
-​Cancellation Policy: Built-in business logic preventing cancellations within 2 hours of showtime.
+```bash
+git clone https://github.com/SurajitSahoo/BookMovie.git
+cd BookMovie
+```
 
-​## 🛠️ Tech Stack
-​Framework: Spring Boot 3.x
-​Security: Spring Security, JJWT (JSON Web Token)
-​Persistence: Spring Data JPA
-​Database: MySQL / PostgreSQL (JDBC)
-​Lombok: To reduce boilerplate code.
+### 2. Configure the Database
 
-​# 📂 Project Structure
+Create a database in MySQL:
 
-Package Description
-.controller REST Endpoints for Auth, Admin, Movies, Theaters, and Bookings.
-.service Business logic, seat validation, and security orchestration.
-.entity JPA Entities defining the database schema.
-.DTO Data Transfer Objects for secure and clean API requests/responses.
-.repository Abstraction layer for database queries.
-.jwt Custom filters and utilities for token handling.
+```sql
+CREATE DATABASE bookmovie;
+```
+
+Update `src/main/resources/application.properties`:
+
+```properties
+spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/bookmovie}
+spring.datasource.username=${DB_USERNAME:root}
+spring.datasource.password=${DB_PASSWORD:your_password}
+
+spring.jpa.hibernate.ddl-auto=update
+```
+
+Configure your JWT secret using an environment variable as well. Never commit real credentials or signing secrets to GitHub.
+
+### 3. Run the Application
+
+```bash
+mvn spring-boot:run
+```
+
+The backend will start at:
+
+`http://localhost:8080`
+
+## 🔑 Authentication Flow
+
+1. Register a user account.
+2. Log in with valid credentials.
+3. Receive a JWT token.
+4. Include the token in the `Authorization` header for secured endpoints.
+5. Access resources according to the assigned role.
+
+Example:
+
+```http
+Authorization: Bearer <your_jwt_token>
+```
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/registernormaluser` | Register a user |
+| POST | `/api/auth/login` | Authenticate a user |
+| GET | `/api/movies/getallmovies` | Retrieve all movies |
+| POST | `/api/booking/createbooking` | Create a booking |
+
+*These are example endpoints based on the project API; verify them against your actual controller mappings.*
+
+## 🧪 Testing
+
+Use Postman to test the REST APIs.
+
+- Test user registration and login.
+- Verify JWT authentication.
+- Check USER and ADMIN permissions.
+- Test movie and show management.
+- Verify seat availability and booking cancellation rules.
+
+## 🔒 Security Highlights
+
+- Passwords are stored using BCrypt hashing.
+- JWT supports stateless authentication.
+- Role-based authorization protects restricted operations.
+- Environment variables can be used to manage sensitive configuration.
+- Booking validation checks seat availability before confirming a reservation.
+
+## 🔮 Future Enhancements
+
+- Online payment integration.
+- Email and SMS booking notifications.
+- Movie ratings and reviews.
+- Seat selection with a visual seating layout.
+- Docker-based deployment.
+- Automated unit and integration testing.
+
+## 👨‍💻 Author
+
+**Surajit Sahoo**
+
+- GitHub: [SurajitSahoo](https://github.com/SurajitSahoo)
+
+## 📄 License
+
+This project is available for educational and portfolio purposes. Add a LICENSE file if you want to specify formal usage and distribution terms.
