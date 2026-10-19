@@ -20,7 +20,7 @@
 
 ​Dynamic Scheduling: Link movies to specific theaters with unique showtimes and pricing.
 
-​## 🎟️ Booking Engine
+​## Booking Engine
 ​Real-time Seat Validation: Prevents double-booking by checking specific seat numbers across existing active bookings.
 
 ​Capacity Management: Automatic checks to ensure theater capacity is never exceeded.
